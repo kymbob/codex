@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Kopilot Chat</title>
+</head>
+<body>
+    <h1>Kopilot Chat</h1>
+    <textarea id="prompt" rows="4" cols="50" placeholder="Ask something..."></textarea><br>
+    <button id="send">Send</button>
+    <pre id="response"></pre>
+    <script>
+    document.getElementById('send').addEventListener('click', async () => {
+        const prompt = document.getElementById('prompt').value;
+        const res = await fetch('/generate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt })
+        });
+        const data = await res.json();
+        document.getElementById('response').textContent = data.response;
+    });
+    </script>
+</body>
+</html>
